@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fabric.js CDN Example</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<script src="https://cdn.tailwindcss.com"></script>
+<body>
+  <!-- The Fabric.js canvas-->
+    <div class="grid md:grid-cols-7">
+      <div class="col-span-1 w-15">
+        <div class="container-logo">
+          <img src="assets/logo.svg" alt="" />
+        </div>
+         <ul>
+          <li>
+            <img src="assets/uploads.svg" alt="" />
+            <span>Uploads</span>
+          </li>
+          <li onclick="loadShapes(event)">
+            <img src="assets/shape.svg" alt=""/>
+            <span>Objects</span>
+          </li>
+          <li onclick="loadEmojis(event)">
+            <img src="assets/image.svg" alt=""/>
+            <span>Images</span>
+          </li>
+          <li>
+            <img src="assets/text.svg" alt=""/>
+            <span>Text</span>
+          </li>
+          <li>
+            <img src="assets/video.svg" alt=""/>
+            <span>
+              Videos
+            </span>
+          </li>
+          <li>
+            <img src="assets/audio.svg" alt=""/>
+            <span>
+              Audio
+            </span>
+          </li>
+         </ul>
+      </div>
+      <div class="col-span-3 md:w-60 assets-container">
+         <div id="icons-container" class="grid grid-cols-2 gap-2">
+
+         </div>
+      
+         <div id="canvas_cont" ondragover="allowDrop(event)" ondrop="dropElement(event)">
+          <canvas id="canvas"></canvas>
+        </div>
+        </div>
+    </div>
+  <!-- Include the Fabric.js library from the CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
+  <script>
+    // Initialize Fabric.js canvas
+    let canvas;
+    window.onload = function(params) {
+      canvas = new fabric.Canvas("canvas", {
+        width: 500,
+        height: 500,
+        backgroundColor: "white",
+      });
+    }
+
+    let isClicked = false
+    // allow drop
+    function allowDrop(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'copy'
+    }
+
+    // Handle drag start event for the drag item
+    function dragElement(event) {
+      event.dataTransfer.setData("id", event.target.id)
+    }
+    
+    // Handle the drop event for the drop target
+    function dropElement(event) {
+      event.preventDefault();
+      // dataTrasfer = object is used to hold the data that is being dragged during a drag and drop operation,
+      // it may hold one or more data items
+      const data = event.dataTransfer.getData("id");
+      let img = document.getElementById(data);
+      
+      // let scaleFactor = Math.min(canvas.width / img.width, canvas.height / img.height)
+      // console.log(scaleFactor, 'testing the scaleFactor');
+      let newImage = new fabric.Image(img, {
+        left: event.layerX - 80,
+        top: event.layerY -40,
+      });
+      newImage.scaleToWidth(1000); //scaling the image height and width with target height and width, scaleToWidth, scaleToHeight fabric inbuilt function. 
+      newImage.scaleToHeight(400);
+      canvas.add(newImage);
+    }
+
+    const shapes = [
+      { id: 1, src: "/src/assets/shapes/arrow.svg" },
+      { id: 2, src: "/src/assets/shapes/circle.svg"},
+      { id: 3, src: "/src/assets/shapes/heart.svg"},
+      { id: 4, src: "/src/assets/shapes/hexagon.svg"},
+      { id: 5, src: "/src/assets/shapes/polygon.svg" },
+      { id: 6, src: "/src/assets/shapes/rectangle.svg" },
+      { id: 7, src: "/src/assets/shapes/star.svg" },
+      { id: 8, src: "/src/assets/shapes/triangle.svg" },
+    ]
+
+    const emojis = [
+      { id: 1, src: "/src/assets/emojis/bomb-emoji.png" },
+      { id: 2, src: "/src/assets/emojis/cat-face-emoji.png"},
+      { id: 3, src: "/src/assets/emojis/clap-emoji.png"},
+      { id: 4, src: "/src/assets/emojis/crying-emoji.png"},
+      { id: 5, src: "/src/assets/emojis/clock-emoji.png" },
+      { id: 6, src: "/src/assets/emojis/construction-emoji.png" },
+      { id: 7, src: "/src/assets/emojis/dog-face-emoji.png" },
+      { id: 8, src: "/src/assets/emojis/eyes-emoji.png" },
+      { id: 9, src: "/src/assets/emojis/fire-emoji.png" },
+      { id: 10, src: "/src/assets/emojis/gem-emoji.png" },
+      { id: 11, src: "/src/assets/emojis/ghost-emoji.png" },
+      { id: 12, src: "/src/assets/emojis/gift-emoji.png" },
+      { id: 13, src: "/src/assets/emojis/graph-emoji.png" },
+      { id: 14, src: "/src/assets/emojis/heart-eyes-emoji.png" },
+      { id: 15, src: "/src/assets/emojis/hundred-100-points-emoji.png" },
+      { id: 16, src: "/src/assets/emojis/laughing-emoji.png" },
+      { id: 17, src: "/src/assets/emojis/mindblown-emoji.png" },
+      { id: 18, src: "/src/assets/emojis/money-emoji.png" },
+      { id: 19, src: "/src/assets/emojis/moon-emoji.png" },
+      { id: 20, src: "/src/assets/emojis/nail-polish-emoji.png" },
+      { id: 21, src: "/src/assets/emojis/party-popper-emoji.png" },
+      { id: 22, src: "/src/assets/emojis/pencil-emoji.png" },
+      { id: 23, src: "/src/assets/emojis/pizza-emoji.png" },
+      { id: 24, src: "/src/assets/emojis/plane-emoji.png" },
+      { id: 25, src: "/src/assets/emojis/pleading-face-emoji.png" },
+      { id: 26, src: "/src/assets/emojis/point-emoji.png" },
+      { id: 27, src: "/src/assets/emojis/praying-hands-emoji.png" },
+      { id: 28, src: "/src/assets/emojis/raising-hands-emoji.png" },
+      { id: 29, src: "/src/assets/emojis/rose-emoji.png" },
+      { id: 30, src: "/src/assets/emojis/skull-emoji.png" },
+      { id: 31, src: "/src/assets/emojis/smiling-emoji.png" },
+      { id: 32, src: "/src/assets/emojis/sparkles-emoji.png" },
+      { id: 33, src: "/src/assets/emojis/star-emoji.png" },
+      { id: 34, src: "/src/assets/emojis/sun-emoji.png" },
+      { id: 35, src: "/src/assets/emojis/sunglasses-cool-emoji.png" },
+      { id: 36, src: "/src/assets/emojis/surprised-emoji.png" },
+      { id: 37, src: "/src/assets/emojis/target-emoji.png" },
+      { id: 38, src: "/src/assets/emojis/thinking-face-emoji.png" },
+      { id: 39, src: "/src/assets/emojis/thought-balloon-emoji.png" },
+      { id: 40, src: "/src/assets/emojis/thumbs-up-emoji.png" },
+      { id: 41, src: "/src/assets/emojis/tongue-emoji.png" },
+      { id: 42, src: "/src/assets/emojis/trophy-emoji.png" },
+      { id: 43, src: "/src/assets/emojis/tulip-emoji.png" },
+      { id: 44, src: "/src/assets/emojis/thought-balloon-emoji.png" },
+      { id: 45, src: "/src/assets/emojis/wave-emoji.png" },
+      { id: 46, src: "/src/assets/emojis/winking-face-emoji.png" },
+      { id: 47, src: "/src/assets/emojis/wip-emoji.png" },
+    ]
+
+    // clear icons from the sidebar
+    function clearIcons() { 
+      let iconsContainer = document.getElementById('icons-container');
+      while (iconsContainer.firstChild) {              
+        iconsContainer.removeChild(iconsContainer.lastChild);
+      }
+    }
+
+    // load shapes from assets folder using javascript
+    function loadShapes() {
+          let iconsContainer = document.getElementById('icons-container');
+          if (iconsContainer.firstChild && isClicked) {
+              clearIcons()
+              shapes?.forEach(element => {
+                let img = document.createElement('img');
+                img.src = element.src;
+                img.draggable = true;
+                img.id = element.id
+                img.ondragstart = dragElement;
+                iconsContainer.appendChild(img);
+              }); 
+          } else {
+            clearIcons()
+          }
+          isClicked = !isClicked
+            shapes?.forEach(element => {
+              let img = document.createElement('img');
+              img.src = element.src;
+              img.draggable = true;
+              img.id = element.id
+              img.ondragstart = dragElement;
+              iconsContainer.appendChild(img);
+          }); 
+      }
+     
+     // load emojs from assets folder using javascript
+    function loadEmojis() {
+          let iconsContainer = document.getElementById('icons-container');
+          if (iconsContainer.firstChild && isClicked) {
+            clearIcons()
+            emojis?.forEach(element => {
+            let img = document.createElement('img');
+            img.src = element.src;
+            img.draggable = true;
+            img.id = element.id
+            img.style.paddingBottom = '10px'
+            img.ondragstart = dragElement;
+            iconsContainer.appendChild(img);
+          });
+           
+          } else {
+            clearIcons() 
+          }
+          isClicked = !isClicked
+            emojis?.forEach(element => {
+              let img = document.createElement('img');
+              img.src = element.src;
+              img.draggable = true;
+              img.id = element.id
+              img.style.paddingBottom = '10px'
+              img.ondragstart = dragElement;
+              iconsContainer.appendChild(img);
+          });
+      }
+  
+    function loadText() {
+      
+    }
+  </script>
+</body>
+</html>
